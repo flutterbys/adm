@@ -1,207 +1,180 @@
 <!DOCTYPE html>
 <html lang="id">
-<head>html
+<head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>admmf</title>
   <style>
     body {
-      display:flex;
-      flex-direction:column;
-      align-items:center;
-      justify-content:flex-start;
-      font-family: 'Poppins', sans-serif;
-      background: url('mew.jpeg') no-repeat center/cover fixed;
       margin: 0;
       padding: 0;
-      text-align: center;
-      color: #2d2d2d;
-    }
-    .container {
-      width: 100%;
-      max-width: 420px;
-      margin: auto;
-      padding: 20px;
-    }
-    .img-box {
-      width: 100%;
-      border-radius: 12px;
+      font-family: 'Poppins', sans-serif;
+      background: url('mew.jpeg') no-repeat center/cover fixed;
+      height: 100vh;
       overflow: hidden;
-      margin-bottom: 25px;
-    }
-    img {
-      width: 100%;
-      display: block;
-      filter: brightness(80%);
-    }
-    h2 {
-      font-size: 4vw;
-      font-weight: 600;
-      color: #3a4db7;
-      line-height: 1.4;
-    }
-    .subtitle {
-      font-size: 3vw;
-      color: #515151;
-      margin-top: 10px;
-      margin-bottom: 25px;
-    }
-    .button {
-      display: inline-block;
-      padding: 12px 25px;
-      background: #4a5be7;
-      color: white;
-      text-decoration: none;
-      border-radius: 30px;
-      font-size: 4vw;
-      margin-top: 15px;
-      transition: transform 0.3s ease, box-shadow 0.3s ease;
-    }
-    .button:hover {
-      transform: scale(1.06);
-      box-shadow: 0 6px 20px rgba(0,0,0,0.2);
-    }
+      display: flex;
+      justify-content: center;
+      align-items: center;
     }
 
-    /* LOCKSCREEN */
+    /* PAGE WRAPPER */
+    .page {
+      width: 100%;
+      height: 100vh;
+      display: none;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      padding: 30px;
+      background: rgba(255,255,255,0.9);
+      animation: fadeIn 0.6s ease;
+    }
+
+    /* MAIN TEXT */
+    .mainText {
+      font-size: 22px;
+      font-weight: 600;
+      color: #3a4db7;
+      line-height: 1.6;
+      max-width: 90%;
+      animation: pop 0.6s ease forwards;
+      opacity: 0;
+    }
+
+    @keyframes pop {
+      from { transform: scale(0.95); opacity: 0; }
+      to { transform: scale(1); opacity: 1; }
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+
+    /* BUTTON */
+    .btn {
+      margin-top: 30px;
+      padding: 12px 28px;
+      background: #4a5be7;
+      color: white;
+      border-radius: 40px;
+      font-size: 16px;
+      border: none;
+      transition: 0.3s;
+    }
+    .btn:hover {
+      transform: scale(1.05);
+    }
+
+    /* BACK BUTTON */
+    #backBtn {
+      position: fixed;
+      bottom: 15px;
+      left: 50%;
+      transform: translateX(-50%);
+      padding: 4px 10px;
+      font-size: 10px;
+      background: black;
+      color: white;
+      border: none;
+      border-radius: 4px;
+      display: none;
+    }
+
+    /* PIN LOCK */
     #lock {
       position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
       background: white;
       display: flex;
       flex-direction: column;
-      align-items: center;
       justify-content: center;
+      align-items: center;
       gap: 20px;
-      padding: 20px;
+      text-align: center;
     }
-    #pinBox {
-      display: flex;
-      gap: 10px;
-    }
-    .pinSlot {
-      width: 30px;
-      height: 30px;
-      border: 2px solid #000;
-      border-radius: 6px;
-    }
-    #keypad {
-      display: grid;
-      grid-template-columns: repeat(3, 70px);
-      gap: 12px;
-    }
-    .key {
-      width: 70px;
-      height: 70px;
-      border-radius: 50%;
-      border: none;
-      font-size: 22px;
-      background: #e6e6e6;
-    }
-
-    @media (max-width: 480px) {
-      h2 { font-size: 6vw; }
-      .subtitle { font-size: 4vw; }
-      .key {
-        width: 60px;
-        height: 60px;
-        font-size: 20px;
-      }
-      #keypad {
-        grid-template-columns: repeat(3, 60px);
-        gap: 10px;
-      }
-      .pinSlot {
-        width: 24px;
-        height: 24px;
-      }
+    #pinInput {
+      padding: 10px;
+      font-size: 20px;
+      text-align: center;
+      width: 140px;
+      border-radius: 8px;
+      border: 2px solid #4a5be7;
     }
   </style>
 </head>
 <body>
-  <div class="container">
-    <div class="img-box">
-      <img src="/mnt/data/mew.jpeg" alt="shadow photo" />
-    </div>
 
-    <h2>
-      halo kakak ganteng, i'm here for u ♡
-    </h2>
-
-    <p class="subtitle">celebrate again through words.</p>
-
-    <a class="button" href="#">open this ka (♡˙︶˙♡)</a>
+  <!-- LOCKSCREEN -->
+  <div id="lock">
+    <h2 style="color:#3a4db7;">enter your pin</h2>
+    <input id="pinInput" type="text" maxlength="6" />
+    <button onclick="unlock()" class="btn">unlock</button>
   </div>
+
+  <!-- PAGE 1 -->
+  <div id="page1" class="page">
+    <div class="mainText">halo kakak ganteng, i'm here for u ♡</div>
+    <button class="btn" onclick="nextPage(1,2)">next</button>
+  </div>
+
+  <!-- PAGE 2 -->
+  <div id="page2" class="page">
+    <div class="mainText">long time no chat kak</div>
+    <button class="btn" onclick="nextPage(2,3)">next</button>
+  </div>
+
+  <!-- PAGE 3 -->
+  <div id="page3" class="page">
+    <div class="mainText">gimana kabarnya? aku harap sehat selalu ya</div>
+    <button class="btn" onclick="nextPage(3,4)">next</button>
+  </div>
+
+  <!-- PAGE 4 -->
+  <div id="page4" class="page">
+    <div class="mainText">makasih sudah ada walau jarang muncul</div>
+    <button class="btn" onclick="nextPage(4,5)">next</button>
+  </div>
+
+  <!-- PAGE 5 -->
+  <div id="page5" class="page">
+    <div class="mainText">semoga harinya selalu indah seperti senyum kamu ♡</div>
+  </div>
+
+  <!-- BACK BUTTON -->
+  <button id="backBtn" onclick="goBack()">back</button>
+
   <audio id="bgm" src="music.mp3" autoplay loop hidden></audio>
-
-  <div id="lock" style="position:fixed; top:0; left:0; width:100%; height:100%; background:white; display:flex; flex-direction:column; align-items:center; justify-content:center;">
-    <h2>open</h2>
-    <input id="pinInput" type="password" maxlength="6" style="padding:10px; font-size:20px; text-align:center;" />
-    <button onclick="unlock()" style="margin-top:15px; padding:10px 20px; font-size:16px; border-radius:8px; background:#4a5be7; color:white; border:none;">Unlock</button>
-  </div>
 
   <script>
     const correctPIN = "251105";
+    let currentPage = 1;
+
     function unlock(){
-      const val = document.getElementById('pinInput').value;
-      if(val === correctPIN){
+      let v = document.getElementById('pinInput').value;
+      if(v === correctPIN){
         document.getElementById('lock').style.display = 'none';
+        document.getElementById('page1').style.display = 'flex';
         document.getElementById('bgm').play();
+        document.getElementById('backBtn').style.display = 'block';
       } else {
         alert('hey no no no!');
       }
     }
-  </script>
-  <button id="backBtn" onclick="history.back()" style="position:fixed; bottom:15px; left:50%; transform:translateX(-50%); padding:4px 10px; font-size:10px; background:black; color:white; border:none; border-radius:4px;">back</button>
-  <!-- Multi Page Sections -->
-  <div id="page1" style="display:none; padding:20px; color:white; text-shadow:0 0 4px black;">
-    <h2>Halaman 1</h2>
-    <p>long time no chat kak</p>
-    <button onclick="nextPage('page1','page2')" style="padding:10px 20px; border:none; border-radius:8px; background:#4a5be7; color:white;">Next</button>
-  </div>
 
-  <div id="page2" style="display:none; padding:20px; color:white; text-shadow:0 0 4px black;">
-    <h2>Halaman 2</h2>
-    <p>giamana kabarnya?</p>
-    <button onclick="nextPage('page2','page3')" style="padding:10px 20px; border:none; border-radius:8px; background:#4a5be7; color:white;">Next</button>
-  </div>
-
-  <div id="page3" style="display:none; padding:20px; color:white; text-shadow:0 0 4px black;">
-    <h2>Halaman 3</h2>
-    <p>Ini halaman ketiga.</p>
-    <button onclick="nextPage('page3','page4')" style="padding:10px 20px; border:none; border-radius:8px; background:#4a5be7; color:white;">Next</button>
-  </div>
-
-  <div id="page4" style="display:none; padding:20px; color:white; text-shadow:0 0 4px black;">
-    <h2>Halaman 4</h2>
-    <p>Ini halaman keempat.</p>
-    <button onclick="nextPage('page4','page5')" style="padding:10px 20px; border:none; border-radius:8px; background:#4a5be7; color:white;">Next</button>
-  </div>
-
-  <div id="page5" style="display:none; padding:20px; color:white; text-shadow:0 0 4px black;">
-    <h2>Halaman 5</h2>
-    <p>Ini halaman terakhir.</p>
-  </div>
-
-  <script>
-    function nextPage(current,next){
-      document.getElementById(current).style.display = 'none';
-      document.getElementById(next).style.display = 'block';
+    function nextPage(now,next){
+      document.getElementById('page'+now).style.display = 'none';
+      document.getElementById('page'+next).style.display = 'flex';
+      currentPage = next;
     }
-    
-    // show first page after unlock
-    const oldUnlock = unlock;
-    function unlock(){
-      const val = document.getElementById('pinInput').value;
-      if(val === correctPIN){
-        document.getElementById('lock').style.display = 'none';
-        document.getElementById('bgm').play();
-        document.getElementById('page1').style.display = 'block';
-      } else {
-        alert('hey no no no!');
+
+    function goBack(){
+      if(currentPage > 1){
+        document.getElementById('page'+currentPage).style.display = 'none';
+        currentPage--;
+        document.getElementById('page'+currentPage).style.display = 'flex';
       }
     }
   </script>
