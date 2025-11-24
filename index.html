@@ -3,11 +3,15 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Happy Birthday</title>
+  <title>admmf</title>
   <style>
     body {
+      display:flex;
+      flex-direction:column;
+      align-items:center;
+      justify-content:flex-start;
       font-family: 'Poppins', sans-serif;
-      background: #ffffff;
+      background: url('mew.jpeg') no-repeat center/cover fixed;
       margin: 0;
       padding: 0;
       text-align: center;
@@ -31,13 +35,13 @@
       filter: brightness(80%);
     }
     h2 {
-      font-size: 5vw;
+      font-size: 4vw;
       font-weight: 600;
       color: #3a4db7;
       line-height: 1.4;
     }
     .subtitle {
-      font-size: 3.5vw;
+      font-size: 3vw;
       color: #515151;
       margin-top: 10px;
       margin-bottom: 25px;
@@ -51,6 +55,12 @@
       border-radius: 30px;
       font-size: 4vw;
       margin-top: 15px;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+    .button:hover {
+      transform: scale(1.06);
+      box-shadow: 0 6px 20px rgba(0,0,0,0.2);
+    }
     }
 
     /* LOCKSCREEN */
@@ -114,38 +124,87 @@
 <body>
   <div class="container">
     <div class="img-box">
-      <img src="/mnt/data/WhatsApp Image 2025-11-24 at 22.18.15.jpeg" alt="shadow photo" />
+      <img src="/mnt/data/mew.jpeg" alt="shadow photo" />
     </div>
 
     <h2>
-      you deserve all the love in the world today and always.<br />
-      happy birthday, my boyfriend ♡
+      halo kakak ganteng, i'm here for u ♡
     </h2>
 
-    <p class="subtitle">just two outlines, but the warmth says it all.</p>
+    <p class="subtitle">celebrate again through words.</p>
 
-    <a class="button" href="#">open this (♡˙︶˙♡)</a>
+    <a class="button" href="#">open this ka (♡˙︶˙♡)</a>
   </div>
   <audio id="bgm" src="music.mp3" autoplay loop hidden></audio>
 
   <div id="lock" style="position:fixed; top:0; left:0; width:100%; height:100%; background:white; display:flex; flex-direction:column; align-items:center; justify-content:center;">
-    <h2>Enter PIN</h2>
+    <h2>open</h2>
     <input id="pinInput" type="password" maxlength="6" style="padding:10px; font-size:20px; text-align:center;" />
     <button onclick="unlock()" style="margin-top:15px; padding:10px 20px; font-size:16px; border-radius:8px; background:#4a5be7; color:white; border:none;">Unlock</button>
   </div>
 
   <script>
-    const correctPIN = "251125";
+    const correctPIN = "251105";
     function unlock(){
       const val = document.getElementById('pinInput').value;
       if(val === correctPIN){
         document.getElementById('lock').style.display = 'none';
         document.getElementById('bgm').play();
       } else {
+        alert('hey no no no!');
+      }
+    }
+  </script>
+  <button id="backBtn" onclick="history.back()" style="position:fixed; bottom:15px; left:50%; transform:translateX(-50%); padding:4px 10px; font-size:10px; background:black; color:white; border:none; border-radius:4px;">back</button>
+  <!-- Multi Page Sections -->
+  <div id="page1" style="display:none; padding:20px; color:white; text-shadow:0 0 4px black;">
+    <h2>Halaman 1</h2>
+    <p>long time no chat kak</p>
+    <button onclick="nextPage('page1','page2')" style="padding:10px 20px; border:none; border-radius:8px; background:#4a5be7; color:white;">Next</button>
+  </div>
+
+  <div id="page2" style="display:none; padding:20px; color:white; text-shadow:0 0 4px black;">
+    <h2>Halaman 2</h2>
+    <p>giamana kabarnya?</p>
+    <button onclick="nextPage('page2','page3')" style="padding:10px 20px; border:none; border-radius:8px; background:#4a5be7; color:white;">Next</button>
+  </div>
+
+  <div id="page3" style="display:none; padding:20px; color:white; text-shadow:0 0 4px black;">
+    <h2>Halaman 3</h2>
+    <p>Ini halaman ketiga.</p>
+    <button onclick="nextPage('page3','page4')" style="padding:10px 20px; border:none; border-radius:8px; background:#4a5be7; color:white;">Next</button>
+  </div>
+
+  <div id="page4" style="display:none; padding:20px; color:white; text-shadow:0 0 4px black;">
+    <h2>Halaman 4</h2>
+    <p>Ini halaman keempat.</p>
+    <button onclick="nextPage('page4','page5')" style="padding:10px 20px; border:none; border-radius:8px; background:#4a5be7; color:white;">Next</button>
+  </div>
+
+  <div id="page5" style="display:none; padding:20px; color:white; text-shadow:0 0 4px black;">
+    <h2>Halaman 5</h2>
+    <p>Ini halaman terakhir.</p>
+  </div>
+
+  <script>
+    function nextPage(current,next){
+      document.getElementById(current).style.display = 'none';
+      document.getElementById(next).style.display = 'block';
+    }
+    
+    // show first page after unlock
+    const oldUnlock = unlock;
+    function unlock(){
+      const val = document.getElementById('pinInput').value;
+      if(val === correctPIN){
+        document.getElementById('lock').style.display = 'none';
+        document.getElementById('bgm').play();
+        document.getElementById('page1').style.display = 'block';
+      } else {
         alert('PIN salah!');
       }
     }
   </script>
-  <button id="backBtn" style="position:fixed; bottom:15px; left:15px; padding:6px 12px; font-size:12px; background:black; color:white; border:none; border-radius:4px;">Back</button>
+
 </body>
 </html>
