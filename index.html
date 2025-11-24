@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Happy Birthday</title>
+  <style>
+    body {
+      font-family: 'Poppins', sans-serif;
+      background: #ffffff;
+      margin: 0;
+      padding: 0;
+      text-align: center;
+      color: #2d2d2d;
+    }
+    .container {
+      max-width: 420px;
+      margin: auto;
+      padding: 30px 20px;
+    }
+    .img-box {
+      width: 100%;
+      border-radius: 12px;
+      overflow: hidden;
+      margin-bottom: 25px;
+    }
+    img {
+      width: 100%;
+      display: block;
+      filter: brightness(80%);
+    }
+    h2 {
+      font-size: 22px;
+      font-weight: 600;
+      color: #3a4db7;
+      line-height: 1.4;
+    }
+    .subtitle {
+      font-size: 14px;
+      color: #515151;
+      margin-top: 10px;
+      margin-bottom: 25px;
+    }
+    .button {
+      display: inline-block;
+      padding: 12px 25px;
+      background: #4a5be7;
+      color: white;
+      text-decoration: none;
+      border-radius: 30px;
+      font-size: 16px;
+      margin-top: 15px;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="img-box">
+      <img src="/mnt/data/WhatsApp Image 2025-11-24 at 22.18.15.jpeg" alt="shadow photo" />
+    </div>
+
+    <h2>
+      you deserve all the love in the world today and always.<br />
+      happy birthday, my boyfriend ♡
+    </h2>
+
+    <p class="subtitle">just two outlines, but the warmth says it all.</p>
+
+    <a class="button" href="#">open this (♡˙︶˙♡)</a>
+  </div>
+  <audio id="bgm" src="music.mp3" autoplay loop hidden></audio>
+
+  <div id="lock" style="position:fixed; top:0; left:0; width:100%; height:100%; background:white; display:flex; flex-direction:column; align-items:center; justify-content:center;">
+    <h2>Enter PIN</h2>
+    <input id="pinInput" type="password" maxlength="6" style="padding:10px; font-size:20px; text-align:center;" />
+    <button onclick="unlock()" style="margin-top:15px; padding:10px 20px; font-size:16px; border-radius:8px; background:#4a5be7; color:white; border:none;">Unlock</button>
+  </div>
+
+  <script>
+    const correctPIN = "251105";
+    function unlock(){
+      const val = document.getElementById('pinInput').value;
+      if(val === correctPIN){
+        document.getElementById('lock').style.display = 'none';
+        document.getElementById('bgm').play();
+      } else {
+        alert('PIN salah!');
+      }
+    }
+  </script>
+</body>
+</html>
