@@ -4,6 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>admmf</title>
+
   <style>
     body {
       margin: 0;
@@ -31,20 +32,31 @@
       animation: fadeIn 0.6s ease;
     }
 
-    /* MAIN TEXT */
+    /* SOFT POP ANIMATION */
     .mainText {
       font-size: 22px;
       font-weight: 600;
       color: #3a4db7;
       line-height: 1.6;
       max-width: 90%;
-      animation: pop 0.6s ease forwards;
       opacity: 0;
+      animation: softPop 0.7s ease forwards;
     }
 
-    @keyframes pop {
-      from { transform: scale(0.95); opacity: 0; }
-      to { transform: scale(1); opacity: 1; }
+    @keyframes softPop {
+      0% {
+        transform: scale(0.85);
+        opacity: 0;
+        filter: blur(3px);
+      }
+      70% {
+        transform: scale(1.03);
+        opacity: 1;
+        filter: blur(0px);
+      }
+      100% {
+        transform: scale(1);
+      }
     }
 
     @keyframes fadeIn {
@@ -82,8 +94,8 @@
       display: none;
     }
 
-    /* PIN LOCK */
-    #lock {
+    /* INTRO */
+    #intro {
       position: fixed;
       top: 0; left: 0;
       width: 100%; height: 100%;
@@ -92,9 +104,25 @@
       flex-direction: column;
       justify-content: center;
       align-items: center;
+      text-align: center;
+      animation: fadeIn 0.6s ease;
+      padding: 30px;
+    }
+
+    /* PIN LOCK */
+    #lock {
+      position: fixed;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      background: white;
+      display: none;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
       gap: 20px;
       text-align: center;
     }
+
     #pinInput {
       padding: 10px;
       font-size: 20px;
@@ -109,41 +137,43 @@
 <body>
 
   <!-- INTRO PAGE -->
-  <div id="intro" style="position:fixed; top:0; left:0; width:100%; height:100%; background:white; display:flex; flex-direction:column; justify-content:center; align-items:center; text-align:center; padding:30px; animation:fadeIn 0.6s ease;">
-    <h2 style="color:#3a4db7; font-size:24px;">welcome kakak ganteng ♡</h2>
-    <p style="margin-top:10px; color:#4a4a4a; max-width:80%; font-size:16px;">aku mau kasih sesuatu dulu sebelum kamu masuk ✨</p>
-    <button class="btn" onclick="goToPIN()" style="margin-top:25px;">start</button>
+  <div id="intro">
+    <h2 class="mainText" style="animation-delay:0s;">halo kakak ganteng ♡</h2>
+    <p style="margin-top:10px; color:#4a4a4a; font-size:16px; animation:softPop 0.8s ease forwards; opacity:0; animation-delay:0.3s;">
+      sebelum masuk, kita masukin pin dulu ya ✨
+    </p>
+    <button class="btn" onclick="playClick(); goToPIN();" style="margin-top:25px;">lanjut</button>
   </div>
 
   <!-- LOCKSCREEN -->
   <div id="lock">
     <h2 style="color:#3a4db7;">enter your pin</h2>
     <input id="pinInput" type="text" maxlength="6" />
-    <button onclick="unlock()" class="btn">unlock</button>
+    <button onclick="playClick(); unlock()" class="btn">unlock</button>
   </div>
 
   <!-- PAGE 1 -->
   <div id="page1" class="page">
     <div class="mainText">halo kakak ganteng, i'm here for u ♡</div>
-    <button class="btn" onclick="nextPage(1,2)">next</button>
+    <button class="btn" onclick="playClick(); nextPage(1,2)">next</button>
   </div>
 
   <!-- PAGE 2 -->
   <div id="page2" class="page">
     <div class="mainText">long time no chat kak</div>
-    <button class="btn" onclick="nextPage(2,3)">next</button>
+    <button class="btn" onclick="playClick(); nextPage(2,3)">next</button>
   </div>
 
   <!-- PAGE 3 -->
   <div id="page3" class="page">
     <div class="mainText">gimana kabarnya? aku harap sehat selalu ya</div>
-    <button class="btn" onclick="nextPage(3,4)">next</button>
+    <button class="btn" onclick="playClick(); nextPage(3,4)">next</button>
   </div>
 
   <!-- PAGE 4 -->
   <div id="page4" class="page">
     <div class="mainText">makasih sudah ada walau jarang muncul</div>
-    <button class="btn" onclick="nextPage(4,5)">next</button>
+    <button class="btn" onclick="playClick(); nextPage(4,5)">next</button>
   </div>
 
   <!-- PAGE 5 -->
@@ -152,16 +182,23 @@
   </div>
 
   <!-- BACK BUTTON -->
-  <button id="backBtn" onclick="goBack()">back</button>
+  <button id="backBtn" onclick="playClick(); goBack()">back</button>
 
-  <audio id="bgm" src="/mnt/data/music.mp3" autoplay loop hidden></audio>
+  <!-- BACKGROUND MUSIC -->
+  <audio id="bgm" src="/mnt/data/Last Night on Earth - Green Day (mp3cut.net) (1).m4a" autoplay loop hidden></audio>
+
+  <!-- CLICK SOUND -->
+  <audio id="clickSound" src="/mnt/data/music.mp3"></audio>
 
   <script>
+    function playClick(){
+      document.getElementById('clickSound').play();
+    }
+
     function goToPIN(){
       document.getElementById('intro').style.display = 'none';
       document.getElementById('lock').style.display = 'flex';
     }
-
 
     const correctPIN = "251105";
     let currentPage = 1;
